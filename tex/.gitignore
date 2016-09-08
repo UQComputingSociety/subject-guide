@@ -1,0 +1,8 @@
+*/*.aux
+*/*.log
+*/*.pdf
+*/*.toc
+*.aux
+*.log
+*.pdf
+*.toc
