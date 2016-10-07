@@ -1,0 +1,72 @@
+\usepackage{keyval}
+
+\makeatletter
+% ========= KEY DEFINITIONS =========
+\define@key{template}{score}{\def\template@score{#1}}
+\define@key{template}{prereq}{\def\template@prereq{#1}}
+\define@key{template}{companion}{\def\template@companion{#1}}
+\define@key{template}{coordinator}{\def\template@coordinator{#1}}
+\define@key{template}{assessment}{\def\template@assessment{#1}}
+\define@key{template}{review}{\def\template@review{#1}}
+% ========= KEY DEFAULTS =========
+\setkeys{template}{prereq = {None}, companion = {None}}%
+
+\newcommand{\courseTemplate}[2][]{
+	\begingroup%
+	\setkeys{template}{#1}% Set new keys
+	%%% TEMPLATE COURSE PAGE %%%
+	
+	%% HEADING
+	\subsection{CSSE1001 - Introduction to Software Engineering}
+	
+	\begin{table}[H]
+		\begin{tabular}{ l  l }
+			\textbf{Course Rating} &
+			
+			%%% COUSE RATING (OUT OF 5)
+			\template@score / 5
+			%%%
+			
+			\\
+			\textbf{Pre-requisite Courses} &
+			
+			%%% COURSE PREREQUISITES
+			\template@prereq
+			%%%
+			
+			\\
+			\textbf{Companion Courses} &
+			
+			%%% COMPANION COURSES
+			\template@companion
+			%%%
+			
+			\\
+			\textbf{Course Coordinator} &
+			
+			%%% COURSE COORDINATOR
+			\template@coordinator
+			%%%
+			
+		\end{tabular}
+	\end{table}
+	
+	\begin{table}[H]
+		\begin{tabular}{ l c  p{7cm}}
+			\textbf{Assessment Type} & \textbf{Weight} & \textbf{Description} \\
+			\hline \\
+			
+			%%% Assessment Items			
+			\template@assessment
+			%%%
+			
+		\end{tabular}
+	\end{table}
+	
+	%%% Review
+	\paragraph{Review}
+	\template@review
+	
+	\endgroup
+}
+\makeatother
