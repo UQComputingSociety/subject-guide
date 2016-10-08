@@ -1,30 +1,34 @@
 \usepackage{keyval}
+\usepackage{ifthen}
 
-\makeatletter
 % ========= KEY DEFINITIONS =========
+\define@key{template}{title}{\def\template@title{#1}}
 \define@key{template}{score}{\def\template@score{#1}}
 \define@key{template}{prereq}{\def\template@prereq{#1}}
 \define@key{template}{companion}{\def\template@companion{#1}}
+\define@key{template}{incompatible}{\def\template@incompatible{#1}}
+\define@key{template}{background}{\def\template@background{#1}}
 \define@key{template}{coordinator}{\def\template@coordinator{#1}}
+\define@key{template}{contact}{\def\template@contact{#1}}
 \define@key{template}{assessment}{\def\template@assessment{#1}}
 \define@key{template}{review}{\def\template@review{#1}}
+\define@key{template}{preparation}{\def\template@preparation{#1}}
 % ========= KEY DEFAULTS =========
-\setkeys{template}{prereq = {None}, companion = {None}}%
+\setkeys{template}{prereq = {None}, companion = {}, background = {}, incompatible = {}}%
 
 \newcommand{\courseTemplate}[2][]{
-	\begingroup%
 	\setkeys{template}{#1}% Set new keys
 	%%% TEMPLATE COURSE PAGE %%%
 	
 	%% HEADING
-	\subsection{CSSE1001 - Introduction to Software Engineering}
+	\subsection{\template@title}
 	
 	\begin{table}[H]
 		\begin{tabular}{ l  l }
-			\textbf{Course Rating} &
+			\textbf{Course Rating} &%
 			
 			%%% COUSE RATING (OUT OF 5)
-			\template@score / 5
+			\score{\template@score}{5}
 			%%%
 			
 			\\
@@ -35,13 +39,41 @@
 			%%%
 			
 			\\
+			\ifthenelse{\equal{\template@companion}{}}{}{%
 			\textbf{Companion Courses} &
-			
 			%%% COMPANION COURSES
 			\template@companion
 			%%%
 			
 			\\
+			}%
+			
+			\ifthenelse{\equal{\template@incompatible}{}}{}{%
+				\textbf{Incompatible Courses} &
+				%%% COMPANION COURSES
+				\template@incompatible
+				%%%
+				
+				\\
+			}%
+			
+			\ifthenelse{\equal{\template@background}{}}{}{%
+				\textbf{Background Knowledge} &
+				%%% COMPANION COURSES
+				\template@background
+				%%%
+				
+				\\
+			}%
+			
+			\textbf{Contact Hours} &
+			
+			%%% COURSE PREREQUISITES
+			\template@contact
+			%%%
+			
+			\\
+			
 			\textbf{Course Coordinator} &
 			
 			%%% COURSE COORDINATOR
@@ -64,9 +96,34 @@
 	\end{table}
 	
 	%%% Review
-	\paragraph{Review}
+	\paragraph{Review}\mbox{}\\
 	\template@review
-	
-	\endgroup
+	\paragraph{How to prepare}
+	\begin{itemize}
+		\template@preparation
+	\end{itemize}
 }
-\makeatother
+
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric,calc}
+
+\newcommand\score[2]{%
+	\pgfmathsetmacro\pgfxa{#1+1}%
+	\tikzstyle{scorestars}=[star, star points=5, star point ratio=2.25, draw,inner sep=0.15em,anchor=outer point 3]%
+	\begin{tikzpicture}[baseline]
+	\foreach \i in {1,...,#2} {
+		\pgfmathparse{(\i<=#1?"yellow":"gray")}
+		\edef\starcolor{\pgfmathresult}
+		\draw (\i*1.1em,0) node[name=star\i,scorestars,fill=\starcolor]  {};
+	}
+	\pgfmathparse{(#1>int(#1)?int(#1+1):0}
+	\let\partstar=\pgfmathresult
+	\ifnum\partstar>0
+	\pgfmathsetmacro\starpart{#1-(int(#1))}
+	\path [clip] ($(star\partstar.outer point 3)!(star\partstar.outer point 2)!(star\partstar.outer point 4)$) rectangle 
+	($(star\partstar.outer point 2 |- star\partstar.outer point 1)!\starpart!(star\partstar.outer point 1 -| star\partstar.outer point 5)$);
+	\fill (\partstar*1em,0) node[scorestars,fill=yellow]  {};
+	\fi
+	
+	,\end{tikzpicture}
+}
