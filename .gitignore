@@ -22,3 +22,8 @@ $RECYCLE.BIN/
 
 # Mac crap
 .DS_Store
+
+###
+# Because Evan doesnt have a global .gitignore
+###
+.idea
