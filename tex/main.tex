@@ -1,10 +1,117 @@
 \documentclass [12pt,a4paper] {article}
 \usepackage {style}
 \usepackage{template}
+\usepackage{background}
+\usepackage{etoolbox}
+\usepackage{graphicx}
+\usepackage{totcount}
+\usepackage{lipsum}
+\usepackage{hyperref}
+\usepackage{fontawesome}
+\usepackage{arrayjobx}
+\usepackage{tikz}
+
+\regtotcounter{section}
+
+% every section starts on a new page
+\pretocmd{\section}{\clearpage}{}{}
+
+% auxiliary lengths for the height of the frame and the width of each tab
+\newlength\mylen
+\newlength\mylena
+
+% Arrays for the icons for each section
+\newarray\sectionicon
+\readarray{sectionicon}{\faHome&\faList& \faAreaChart &\faDatabase& Ai &\faHome&\faHome}
+\def\sectioncolour{{"gray","purple","blue", "red", "orange", "yellow"}}
+% style for the section tabs
+\tikzset{
+tab/.style={
+  text width=30mm,
+  draw=gray,
+  thick,
+  rectangle,
+  align=center,
+  inner sep=0pt,
+  fill=gray!20,
+  font=\sffamily\LARGE
+  }
+}
+% style for the current section tab
+\tikzset{selectedtab/.style={tab,color=white,fill=gray}}
+
+% the page number is showed in the background material
+\pagestyle{empty}
+
+\AtBeginDocument{
+% calculation of the width for each tab
+\setlength\mylen{\paperheight}
+\ifnum\totvalue{section}>0
+\setlength\mylena{\dimexpr\mylen/\totvalue{section}\relax}
+\fi
+
+% the main part; as background material we place the border,
+% the section (current and other) tabs and the page number
+\backgroundsetup{
+scale=1,
+color=black,
+angle=0,
+opacity=1,
+contents= {
+  \begin{tikzpicture}[
+    remember picture,
+    overlay,
+    ]
+  \ifnum\thesection>0
+  \ifnum\totvalue{section}>0
+  \node[
+    inner sep=0pt
+  ]
+    at (current page.center) (border) {\rule{0pt}{\dimexpr\textheight+2cm\relax}};
+  \foreach \valsection in {0,...,\numexpr\totvalue{section}-1\relax}
+  {%
+    \pgfmathsetmacro{\sc}{\sectioncolour[\valsection]}
+    \node[
+      \ifnum\thesection<\numexpr\valsection+1\relax
+        tab%
+      \else
+          \ifnum\thesection>\numexpr\valsection+1\relax
+            tab%
+          \else
+            selectedtab%
+          \fi
+      \fi,
+      minimum height=\mylena, fill=\sc, draw=\sc
+      ]
+      at ([yshift=-(0.5+\valsection)*\mylena]current page.north west)
+      (tab-\valsection)
+      {\hspace*{15mm}{%
+        \hyperlink{sec:\valsection}{\sectionicon(\numexpr\valsection+1)}%
+        }
+      };
+  }
+  \pgfmathsetmacro{\sc}{\sectioncolour[\numexpr\thesection-1]}
+  \node[
+    draw=\sc,
+    line width=2pt,
+    rectangle,
+    inner sep=0pt,
+    text width=4mm,
+    fill=\sc
+  ]
+    at ([xshift=16mm]current page.west)
+    {\rule{0pt}{\paperheight}};
+  \node[font=\LARGE\sffamily,fill=white]
+    at (border.south)
+    {\makebox[3em][c]{\thepage}};
+  \fi
+  \fi
+\end{tikzpicture}}
+  }
+}
 
 % title page preamble
 \begin {document}
-
 \input {misc/titlePage}
 
 % glorified preamble
