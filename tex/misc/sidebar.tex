@@ -1,8 +1,6 @@
 \newlength\mylen
 \newlength\mylena
-\newarray\sectionicon
-\readarray{sectionicon}{\faHome&\faList& \faAreaChart &\faDatabase& Ai &\faHome&\faHome}
-\def\sectioncolour{{"gray","purple","blue", "red", "orange", "yellow"}}
+\input{misc/sections}
 \tikzset{
   tab/.style={
     text width=30mm,
@@ -12,14 +10,8 @@
     align=center,
     inner sep=0pt,
     fill=gray!20,
-    font=\sffamily\LARGE
-  }
-}
-\tikzset{
-  selectedtab/.style={
-    tab,
-    color=white,
-    fill=gray
+    font=\sffamily\LARGE,
+    color=black
   }
 }
 
@@ -47,21 +39,12 @@
               \rule{0pt}{\dimexpr\textheight+2cm\relax}};
           \foreach \valsection in {0,...,\numexpr\totvalue{section}-1\relax} {%
             \pgfmathsetmacro{\sc}{\sectioncolour[\valsection]}
-            \node[
-              \ifnum\thesection<\numexpr\valsection+1\relax
-                tab%
-              \else
-                \ifnum\thesection>\numexpr\valsection+1\relax
-                  tab%
-                \else
-                  selectedtab%
-                \fi
-              \fi,
-            minimum height=\mylena, fill=\sc, draw=\sc ]
+            \pgfmathsetmacro{\sl}{\sectionlink[\valsection]}
+            \node[tab,minimum height=\mylena, fill=\sc, draw=\sc]
                 at ([yshift=-(0.5+\valsection)*\mylena]current page.north west)
                 (tab-\valsection)
-              {\hspace*{15mm}
-                 {\hyperlink{sec:\valsection}{\sectionicon(\numexpr\valsection+1)}}};
+              {\hspace*{10mm}
+                 {\hyperlink{\sl}{\sectionicon(\numexpr\valsection+1)}}};
           }
         \pgfmathsetmacro{\sc}{\sectioncolour[\numexpr\thesection-1]}
         \node[
