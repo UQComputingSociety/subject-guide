@@ -2,7 +2,7 @@ dist: trusty
 sudo: required
 before_install:
 - sudo add-apt-repository ppa:jonathonf/texlive -y
-- sudo apt-get -qq update && sudo apt-get install -y texlive
+- sudo apt-get -qq update && sudo apt-get install -y texlive texlive-latex-extra
 script: make
 deploy:
   provider: releases
