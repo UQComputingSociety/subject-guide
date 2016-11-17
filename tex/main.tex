@@ -1,20 +1,26 @@
 \documentclass [12pt,a4paper] {article}
 \usepackage {style}
 \usepackage{template}
+\usepackage{background}
+\usepackage{etoolbox}
+\usepackage{graphicx}
+\usepackage{totcount}
+\usepackage{lipsum}
+\usepackage{hyperref}
+\usepackage{fontawesome}
+\usepackage{arrayjobx}
+\usepackage{tikz}
 
-% title page preamble
+\regtotcounter{section}
+\pretocmd{\section}{\clearpage}{}{} % new page for sections
+\pagestyle{empty} % disbale page numbers
+
+\input{misc/sidebar} % sidebar addon
+
 \begin {document}
-
-\include {./misc/titlePage}
-
-% glorified preamble
-%\titleAT
-\newpage
-\tableofcontents
-\newpage
-
-% general intro stuff here
-\input{./general/about.tex}
-% courses here
-\input{./courses/index.tex}
+  \input {misc/titlePage}
+  \tableofcontents
+  \input{general/about.tex}
+  \input{courses/index.tex}
+  \input{courses/subjects.tex}
 \end {document}

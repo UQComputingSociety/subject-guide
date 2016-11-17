@@ -1,0 +1,67 @@
+\newlength\mylen
+\newlength\mylena
+\input{misc/sections}
+\tikzset{
+  tab/.style={
+    text width=30mm,
+    draw=gray,
+    thick,
+    rectangle,
+    align=center,
+    inner sep=0pt,
+    fill=gray!20,
+    font=\sffamily\LARGE,
+    color=black
+  }
+}
+
+\AtBeginDocument{
+  % calculation of the width for each tab
+  \setlength\mylen{\paperheight}
+  \ifnum\totvalue{section}>0
+    \setlength\mylena{\dimexpr\mylen/\totvalue{section}\relax}
+  \fi
+
+  \backgroundsetup{
+    scale=1,
+    color=black,
+    angle=0,
+    opacity=1,
+    contents= {
+    \begin{tikzpicture}[
+      remember picture,
+      overlay,
+    ]
+    \ifnum\thesection>0
+      \ifnum\totvalue{section}>0
+        \node[inner sep=0pt]
+            at (current page.center) (border) {
+              \rule{0pt}{\dimexpr\textheight+2cm\relax}};
+          \foreach \valsection in {0,...,\numexpr\totvalue{section}-1\relax} {%
+            \ifnum\thesection=\numexpr\valsection+1
+              \pgfmathsetmacro{\sc}{\sectioncolour[\valsection]}
+            \else
+              \pgfmathsetmacro{\sc}{\sectioncolour[0]}
+            \fi
+            \pgfmathsetmacro{\sl}{\sectionlink[\valsection]}
+            \node[tab,minimum height=\mylena, fill=\sc, draw=\sc]
+                at ([yshift=-(0.5+\valsection)*\mylena]current page.north west)
+                (tab-\valsection)
+              {\hspace*{10mm}
+                 {\hyperlink{\sl}{\sectionicon(\numexpr\valsection+1)}}};
+          }
+        \pgfmathsetmacro{\sc}{\sectioncolour[\numexpr\thesection-1]}
+        \node[
+          draw=\sc,
+          fill=\sc,
+          line width=2pt,
+          rectangle,
+          inner sep=0pt,
+          text width=6mm
+        ] at ([xshift=18mm]current page.west){\rule{0pt}{\paperheight}};
+        \node[font=\LARGE\sffamily,fill=white] at (border.south){\makebox[3em][c]{\thepage}};
+      \fi
+    \fi
+    \end{tikzpicture}}
+  }
+}
