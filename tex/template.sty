@@ -2,6 +2,7 @@
 \usepackage{ifthen}
 
 % ========= KEY DEFINITIONS =========
+\define@key{template}{code}{\def\template@code{#1}}
 \define@key{template}{title}{\def\template@title{#1}}
 \define@key{template}{score}{\def\template@score{#1}}
 \define@key{template}{prereq}{\def\template@prereq{#1}}
@@ -21,7 +22,8 @@
 	%%% TEMPLATE COURSE PAGE %%%
 	
 	%% HEADING
-	\subsection{\template@title}
+	\subsection{\template@code\ - \template@title}
+	\hypertarget{subject:\template@code}{}
 	
 	\begin{table}[H]
 		\begin{tabular}{ l  l }
