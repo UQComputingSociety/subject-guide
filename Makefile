@@ -1,4 +1,4 @@
-TEX = lualatex -interaction=nonstopmode -halt-on-error -output-directory _build
+TEX = pdflatex -interaction=nonstopmode -halt-on-error -output-directory _build
 
 all : subject-guide
 
