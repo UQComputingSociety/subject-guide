@@ -2,6 +2,8 @@
 
 [UQCS Subject Guide PDF](https://jenkins.trm.io/job/UQCS%20subject%20guide/ws/tex/_build/main.pdf)
 
+[![Build Status](https://jenkins.trm.io/buildStatus/icon?job=UQCS subject guide)](https://jenkins.trm.io/job/UQCS%20subject%20guide/)
+
 ## About
 
 This project is designed to give students information about courses taken by
