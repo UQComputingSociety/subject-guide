@@ -22,76 +22,64 @@
 	%%% TEMPLATE COURSE PAGE %%%
 	
 	%% HEADING
-	\subsection{\template@code\ - \template@title}
+	\raggedright\subsection{\template@code\ - \template@title}
 	\hypertarget{subject:\template@code}{}
-	
 	\begin{table}[H]
-		\begin{tabular}{ l l }
-			\textbf{Offical Course Link} &
+		\begin{tabular}{ l p{105mm} }
+			\textbf{Course Link} &
 
-			\href{https://www.uq.edu.au/study/course.html?course_code=\template@code}{\nolinkurl{https://www.uq.edu.au/study/course.html?course_code=\template@code} }
+			\href{https://www.uq.edu.au/study/course.html?course_code=\template@code}{\footnotesize\nolinkurl{www.uq.edu.au/study/course.html?course_code=\template@code}} \\
 
-			\\
 			\textbf{Course Rating} &%
 			
 			%%% COUSE RATING (OUT OF 5)
-			\score{\template@score}{5}
-			%%%
-			
-			\\
+			\score{\template@score}{5} \\
 			\textbf{Pre-requisite Courses} &
 			
 			%%% COURSE PREREQUISITES
-			\parbox[l]{12cm}{\template@prereq}
+			%\parbox[l]{6cm}{\template@prereq}
+			\template@prereq \\
 			%%%
 			
-			\\
 			\ifthenelse{\equal{\template@companion}{}}{}{%
 			\textbf{Companion Courses} &
 			%%% COMPANION COURSES
-			\template@companion
+			\template@companion \\
 			%%%
-			
-			\\
 			}%
 			
 			\ifthenelse{\equal{\template@incompatible}{}}{}{%
 				\textbf{Incompatible Courses} &
 				%%% COMPANION COURSES
-				\template@incompatible
+				\template@incompatible \\
 				%%%
-				
-				\\
 			}%
 			
 			\ifthenelse{\equal{\template@background}{}}{}{%
 				\textbf{Background Knowledge} &
 				%%% COMPANION COURSES
-				\template@background
+				\template@background \\
 				%%%
-				
-				\\
 			}%
 			
 			\textbf{Contact Hours} &
 			
 			%%% COURSE PREREQUISITES
-			\template@contact
+			\template@contact \\
 			%%%
-			
-			\\
 			
 			\textbf{Course Coordinator} &
 			
 			%%% COURSE COORDINATOR
-			\parbox[l]{12cm}{\template@coordinator}
+			%\parbox[l]{6cm}{\template@coordinator}
+			\template@coordinator
 			%%%
 			
 		\end{tabular}
 	\end{table}
 	
 	\begin{table}[H]
-		\begin{tabular}{ p{6cm} c p{7cm}}
+		\begin{tabular}{ p{5cm} c p{7cm}}
 			\textbf{Assessment Type} & \textbf{Weight} & \textbf{Description} \\
 			\hline \\
 			
