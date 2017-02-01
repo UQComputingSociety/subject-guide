@@ -1,8 +1,8 @@
 # UQCS Subject Guide
 
-[UQCS Subject Guide PDF](https://jenkins.trm.io/job/UQCS%20subject%20guide/ws/tex/_build/main.pdf)
+[UQCS Subject Guide PDF](https://jenkins.trm.io/job/uqcs_subject_guide/lastSuccessfulBuild/artifact/tex/_build/main.pdf)
 
-[![Build Status](https://jenkins.trm.io/buildStatus/icon?job=UQCS subject guide)](https://jenkins.trm.io/job/UQCS%20subject%20guide/)
+[![Build Status](https://jenkins.trm.io/buildStatus/icon?job=uqcs_subject_guide)](https://jenkins.trm.io/job/uqcs_subject_guide)
 
 ## About
 
