@@ -6,11 +6,15 @@ def main():
     semesters = getSemesters(2)
     
     path = os.path.realpath("tex/courses/subjects/")
+    total = len(os.listdir(path))
+    count = 1
     for filename in os.listdir(path):
         course = filename.split('.')[0] # Just the course name
         info = getCourseData(semesters, course)
         if (len(info) > 0):
             writeCourseData(path, filename, info)
+        print str(count) + "/" + str(total)
+        count += 1
 
 def getSemesters(number):
     url = "https://api.uqfinal.com/semesters"
@@ -31,7 +35,7 @@ def getCourseData(semesters, course):
     api = "https://api.uqfinal.com/course/"
 
     assessment = []
-    print course
+    # printprint course
 
     for semester in semesters:
         url = api + str(semester) + "/" + course
@@ -44,9 +48,9 @@ def getCourseData(semesters, course):
     return assessment
 
 def formatAssessmentItem(item):
-    task = item["taskName"]
+    description = item["taskName"]
     weight = item["weight"]
-    description = "" # uqfinal api doesn't have task description
+    task = "Assessment" # uqfinal api doesn't have task description
 
     if unicode(weight).isnumeric():
         weight = str(weight) + "\%"
